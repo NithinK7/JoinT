@@ -8,6 +8,7 @@ import AddGroupScreen from './screens/AddGroupScreen'
 import EditGroupScreen from './screens/EditGroupScreen'
 import AddRoomScreen from './screens/AddRoomScreen'
 import RoomScreen from './screens/RoomScreen'
+import SearchPage from './SearchPage'
 
 class HomeScreen extends React.Component {
   render() {
@@ -34,9 +35,10 @@ const RootStack = createStackNavigator(
     EditGroup: EditGroupScreen,
     AddRoom: AddRoomScreen,
     Room: RoomScreen,
+    SearchPage: SearchPage
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'SearchPage',
   }
 );
 
