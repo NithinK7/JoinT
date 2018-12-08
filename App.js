@@ -2,12 +2,12 @@ import React from 'react';
 import { ScrollView, TextInput, Button } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation'; 
-import GroupListScreen from './GroupListScreen'
-import GroupScreen from './GroupScreen'
-import AddGroupScreen from './AddGroupScreen'
-import EditGroupScreen from './EditGroupScreen'
-import AddRoomScreen from './AddRoomScreen'
-import RoomScreen from './RoomScreen'
+import GroupListScreen from './screens/GroupListScreen'
+import GroupScreen from './screens/GroupScreen'
+import AddGroupScreen from './screens/AddGroupScreen'
+import EditGroupScreen from './screens/EditGroupScreen'
+import AddRoomScreen from './screens/AddRoomScreen'
+import RoomScreen from './screens/RoomScreen'
 
 class HomeScreen extends React.Component {
   render() {
