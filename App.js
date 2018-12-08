@@ -1,39 +1,50 @@
 import React from 'react';
 import { ScrollView, TextInput, Button } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation'; 
+import GroupListScreen from './GroupListScreen'
+import GroupScreen from './GroupScreen'
+import AddGroupScreen from './AddGroupScreen'
+import EditGroupScreen from './EditGroupScreen'
+import AddRoomScreen from './AddRoomScreen'
+import RoomScreen from './RoomScreen'
 
-export default class App extends React.Component {
-
+class HomeScreen extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-      <Text>
-          </Text>
-        <Text>
-          Welcome to Wonderla!</Text>
-        <ScrollView style={{padding: 20}}>
-                <Text style={{fontSize: 27}}>Please Login</Text>
-                <TextInput 
-                    placeholder='Username'
-                    autoCapitalize='none'
-                    autoCorrect={false} 
-                    autoFocus={true} 
-                    keyboardType='email-address'
-                    value=''
-                    onChangeText={(text) => this.setState({ username: text })} />
-                <TextInput 
-                    placeholder='Password'
-                    autoCapitalize='none'
-                    autoCorrect={false} 
-                    secureTextEntry={true} 
-                    value=''
-                    onChangeText={(text) => this.setState({ password: text })} />
-                <View style={{margin: 7}}/>
-                <Button title={'Login'}/>
-            </ScrollView>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Home Screen</Text>
+        <Button
+          title="Go to Group List"
+          onPress={() => this.props.navigation.navigate('GroupList')}
+        />
       </View>
-      
-    )
+    );
+  }
+}
+
+
+
+const RootStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+    GroupList: GroupListScreen,
+    Group: GroupScreen,
+    AddGroup: AddGroupScreen,
+    EditGroup: EditGroupScreen,
+    AddRoom: AddRoomScreen,
+    Room: RoomScreen,
+  },
+  {
+    initialRouteName: 'Home',
+  }
+);
+
+const AppContainer = createAppContainer(RootStack);
+
+export default class App extends React.Component {
+  render() {
+    return <AppContainer />;
   }
 }
 
