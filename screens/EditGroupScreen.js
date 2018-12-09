@@ -2,9 +2,10 @@ import React from 'react';
 import { ScrollView,
   View,
   TouchableOpacity,
-  StyleSheet, TextInput, Button } from 'react-native';
+  StyleSheet, FlatList,TextInput, Button } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation'; 
-
+import { data } from '../data';
+import { Avatar } from '../components/avatar';
 // class EditGroupScreen extends React.Component {
 //   render() {
 //     return (
@@ -37,6 +38,10 @@ class EditGroupScreen extends React.Component {
     twitterEnabled: true,
     googleEnabled: false,
     facebookEnabled: true,
+    data: {
+      original: data.getUsers(),
+      filtered: data.getUsers(),
+    },
   };
 
   onPushNotificationsSettingChanged = (value) => {
@@ -58,6 +63,15 @@ class EditGroupScreen extends React.Component {
   onFindFriendsFacebookButtonPressed = () => {
     this.setState({ facebookEnabled: !this.state.facebookEnabled });
   };
+
+  renderItem = ({ item }) => (
+    <TouchableOpacity >
+      <View style={styles.memberContainer}>
+        <Avatar rkType='circle' style={styles.avatar} img={item.photo} />
+        <RkText>{`${item.firstName} ${item.lastName}`}</RkText>
+      </View>
+    </TouchableOpacity>
+  );
 
   render = () => (
     <ScrollView style={styles.container}>
@@ -90,33 +104,15 @@ class EditGroupScreen extends React.Component {
         <View style={[styles.row, styles.heading]}>
           <RkText rkType='primary header6'>Members List</RkText>
         </View>
-        <View style={styles.row}>
-          <FindFriends
-            color={RkTheme.current.colors.twitter}
-            text='Twitter'
-            icon={FontAwesome.twitter}
-            selected={this.state.twitterEnabled}
-            onPress={this.onFindFriendsTwitterButtonPressed}
-          />
-        </View>
-        <View style={styles.row}>
-          <FindFriends
-            color={RkTheme.current.colors.google}
-            text='Google'
-            icon={FontAwesome.google}
-            selected={this.state.googleEnabled}
-            onPress={this.onFindFriendsGoogleButtonPressed}
-          />
-        </View>
-        <View style={styles.row}>
-          <FindFriends
-            color={RkTheme.current.colors.facebook}
-            text='Facebook'
-            icon={FontAwesome.facebook}
-            selected={this.state.facebookEnabled}
-            onPress={this.onFindFriendsFacebookButtonPressed}
-          />
-        </View>
+        <FlatList
+          style={styles.root}
+          data={this.state.data.filtered}
+          renderItem={this.renderItem}
+          ListHeaderComponent={this.renderHeader}
+          ItemSeparatorComponent={this.renderSeparator}
+          keyExtractor={this.extractItemKey}
+          enableEmptySections
+        />
       </View>
     </ScrollView>
   )
@@ -149,5 +145,28 @@ const styles = RkStyleSheet.create(theme => ({
   },
   switch: {
     marginVertical: 14,
+  },
+  root: {
+    backgroundColor: theme.colors.screen.base,
+  },
+  searchContainer: {
+    backgroundColor: theme.colors.screen.bold,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    height: 60,
+    alignItems: 'center',
+  },
+  memberConainer: {
+    flexDirection: 'row',
+    padding: 16,
+    alignItems: 'center',
+  },
+  avatar: {
+    marginRight: 16,
+  },
+  separator: {
+    flex: 1,
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: theme.colors.border.base,
   },
 }));

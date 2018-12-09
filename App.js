@@ -51,7 +51,7 @@ const RootStack = createStackNavigator(
     Results: SearchResults 
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'EditGroup',
   }
 );
 

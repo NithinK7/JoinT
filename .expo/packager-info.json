@@ -2,8 +2,8 @@
   "expoServerPort": 19000,
   "expoServerNgrokUrl": "https://hc-drj.anonymous.joint.exp.direct",
   "packagerNgrokUrl": "https://packager.hc-drj.anonymous.joint.exp.direct",
-  "ngrokPid": 55663,
+  "ngrokPid": 92673,
   "devToolsPort": 19002,
   "packagerPort": 19003,
-  "packagerPid": 55644
+  "packagerPid": 92651
 }
