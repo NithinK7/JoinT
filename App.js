@@ -1,6 +1,17 @@
 import React from 'react';
 import { ScrollView, TextInput, Button } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
+import { withRkTheme } from 'react-native-ui-kitten';
+// import { AppRoutes } from './config/navigation/routesBuilder';
+// import * as Screens from './screens';
+import { bootstrap } from './config/bootstrap';
+import track from './config/analytics';
+import { data } from './data';
+import { Font, AppLoading } from "expo";
+
+bootstrap();
+data.populateData();
+
 import { createStackNavigator, createAppContainer } from 'react-navigation'; 
 import GroupListScreen from './screens/GroupListScreen'
 import GroupScreen from './screens/GroupScreen'
@@ -8,8 +19,8 @@ import AddGroupScreen from './screens/AddGroupScreen'
 import EditGroupScreen from './screens/EditGroupScreen'
 import AddRoomScreen from './screens/AddRoomScreen'
 import RoomScreen from './screens/RoomScreen'
-import SearchPage from './SearchPage'
-import SearchResults from './SearchResults'
+import SearchPage from './screens/SearchPage'
+import SearchResults from './screens/SearchResults'
 
 class HomeScreen extends React.Component {
   render() {
@@ -40,16 +51,49 @@ const RootStack = createStackNavigator(
     Results: SearchResults 
   },
   {
-    initialRouteName: 'SearchPage',
+    initialRouteName: 'Home',
   }
 );
 
 const AppContainer = createAppContainer(RootStack);
 
 export default class App extends React.Component {
-  render() {
-    return <AppContainer />;
+  
+  state = {
+    isLoaded: false,
+  };
+
+  componentWillMount() {
+    // this.state.isLoaded = true
+    this.loadAssets();
   }
+  loadAssets = async () => {
+    await Font.loadAsync({
+      fontawesome: require('./assets/fonts/fontawesome.ttf'),
+      icomoon: require('./assets/fonts/icomoon.ttf'),
+      'Righteous-Regular': require('./assets/fonts/Righteous-Regular.ttf'),
+      'Roboto-Bold': require('./assets/fonts/Roboto-Bold.ttf'),
+      'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
+      'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
+      'Roboto-Light': require('./assets/fonts/Roboto-Light.ttf'),
+    });
+    this.setState({ isLoaded: true });
+  }
+  
+  renderLoading = () => (
+    <AppLoading />
+  );
+
+  renderApp = () => (
+    <AppContainer />
+  );
+
+  render = () => (this.state.isLoaded ? this.renderApp() : this.renderLoading());
+
+  // render() {
+  //   return <AppContainer />
+    
+  // }
 }
 
 const styles = StyleSheet.create({
